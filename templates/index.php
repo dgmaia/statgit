@@ -2,17 +2,6 @@
   require(__DIR__ . "/_header.php");
 ?>
 
-<dl>
-
-  <dt>Latest commit</dt>
-  <dd>
-    <?php echo $this->linkCommit($stats['summary']['last_hash']); ?>
-    <br>
-    <i><?php echo htmlspecialchars($stats['summary']['last_subject']); ?></i>
-  </dd>
-
-</dl>
-
 <ul class="navigation">
   <li><a href="authors.html">Authors</a></li>
   <li><a href="loc.html">Lines of code</a></li>

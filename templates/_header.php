@@ -1,18 +1,6 @@
 <header class="header">
   <h1>Development statistics for:</h1>
   <h2><?php echo $stats['summary']['name']; ?></h2>
-
-  <section>
-    <h3>Generated:</h3>
-    <p><?php echo date('r'); ?></p>
-
-    <h3>Report period</h3>
-    <p>
-      <?php echo $this->plural((strtotime($stats['summary']['last_commit']) - strtotime($stats['summary']['first_commit'])) / (60 * 60 * 24), "day"); ?>. From
-      <?php echo date('Y-m-d', strtotime($stats['summary']['first_commit'])); ?> to <?php echo date('Y-m-d', strtotime($stats['summary']['last_commit'])); ?>
-    </p>
-  </section>
-
 </header>
 
 <section class="status">
@@ -46,3 +34,21 @@
   </div>
 
 </section>
+
+<section class="information">
+    <h3>Generated:</h3>
+    <p><?php echo date('r'); ?></p>
+
+    <h3>Report period</h3>
+    <p>
+      <?php echo $this->plural((strtotime($stats['summary']['last_commit']) - strtotime($stats['summary']['first_commit'])) / (60 * 60 * 24), "day"); ?>. From
+      <?php echo date('Y-m-d', strtotime($stats['summary']['first_commit'])); ?> to <?php echo date('Y-m-d', strtotime($stats['summary']['last_commit'])); ?>
+    </p>
+
+    <h3>Latest commit</h3>
+    <p>
+      <?php echo $this->linkCommit($stats['summary']['last_hash']); ?>
+      <br/>
+      <i><?php echo htmlspecialchars($stats['summary']['last_subject']); ?></i>
+    </p>
+  </section>

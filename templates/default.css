@@ -19,8 +19,8 @@ p {
 }
 
 .header {
-  background-color: #CCC;
-  padding: 20px 40px;
+  background-color: #F5CB5C;
+  padding: 60px 40px;
 }
 
 .header h1 {
@@ -30,30 +30,32 @@ p {
 .header h2 {
   font-size: 5rem;
   font-weight: normal;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #EAEAEA;
-  margin-bottom: 35px;
-}
-
-.header p {
-  margin-bottom: 20px;
 }
 
 .status {
   display: flex;
-  padding: 40px;
+  padding: 60px;
   flex-direction: row;
-  background-color: #EAEAEA;
-  margin-bottom: 20px;
+  background-color: #242423;
 }
 
 .status > div {
   width: 25%;
   text-align: center;
+  color: #fff;
 }
 
 .status .big-number {
   font-size: 4rem;
+}
+
+.information {
+  padding: 40px 40px 20px 40px;
+  background-color: #f4f4f4;
+}
+
+.information p {
+  margin-bottom: 20px;
 }
 
 dt {
