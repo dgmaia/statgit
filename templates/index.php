@@ -1,11 +1,8 @@
-<h1>Development statistics for <?php echo $stats['summary']['name']; ?></h1>
+<?php
+  require(__DIR__ . "/_header.php");
+?>
 
 <dl>
-  <dt>Generated</dt>
-  <dd><?php echo date('r'); ?></dd>
-
-  <dt>Commits</dt>
-  <dd><?php echo number_format(count($database['commits'])); ?></dd>
 
   <dt>Latest commit</dt>
   <dd>
@@ -13,21 +10,6 @@
     <br>
     <i><?php echo htmlspecialchars($stats['summary']['last_subject']); ?></i>
   </dd>
-
-  <dt>Report period</dt>
-  <dd>
-    <?php echo date('Y-m-d', strtotime($stats['summary']['first_commit'])); ?> to <?php echo date('Y-m-d', strtotime($stats['summary']['last_commit'])); ?>
-    (<?php echo $this->plural((strtotime($stats['summary']['last_commit']) - strtotime($stats['summary']['first_commit'])) / (60 * 60 * 24), "day"); ?>)
-  </dd>
-
-  <dt>Total files</dt>
-  <dd><?php echo number_format($stats['summary']['total_files']); ?></dd>
-
-  <dt>Total lines of code</dt>
-  <dd><?php echo number_format($stats['summary']['total_loc']); ?></dd>
-
-  <dt>Authors</dt>
-  <dd><?php echo number_format($stats['summary']['author_count']); ?></dd>
 
 </dl>
 

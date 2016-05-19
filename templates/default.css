@@ -2,12 +2,58 @@ html {
   margin: 0;
   padding: 0;
   font-family: Arial;
-  font-size: 95%;
+  font-size: 16px;
 }
 
 body {
-  margin: 20px;
-  padding: 0;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0 0 5px 0;
+}
+
+p {
+  margin: 0;
+}
+
+.header {
+  background-color: #CCC;
+  padding: 20px 40px;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+}
+
+.header h2 {
+  font-size: 5rem;
+  font-weight: normal;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EAEAEA;
+  margin-bottom: 35px;
+}
+
+.header p {
+  margin-bottom: 20px;
+}
+
+.status {
+  display: flex;
+  padding: 40px;
+  flex-direction: row;
+  background-color: #EAEAEA;
+  margin-bottom: 20px;
+}
+
+.status > div {
+  width: 25%;
+  text-align: center;
+}
+
+.status .big-number {
+  font-size: 4rem;
 }
 
 dt {
