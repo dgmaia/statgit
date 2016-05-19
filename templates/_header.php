@@ -6,31 +6,39 @@
 <section class="status">
 
   <div>
-    <div class="big-number">
-      <?php echo number_format(count($database['commits'])); ?>
-    </div>
-    <p>Commits</p>
+    <a href="#">
+      <div class="big-number">
+        <?php echo number_format(count($database['commits'])); ?>
+      </div>
+      <p>Commits</p>
+    </a>
   </div>
 
   <div>
-    <div class="big-number">
-      <?php echo number_format($stats['summary']['total_files']); ?>
-    </div>
-    <p>Total files</p>
+    <a href="files.html">
+      <div class="big-number">
+        <?php echo number_format($stats['summary']['total_files']); ?>
+      </div>
+      <p>Total files</p>
+    </a>
   </div>
 
   <div>
-    <div class="big-number">
-      <?php echo number_format($stats['summary']['total_loc']); ?>
-    </div>
-    <p>Lines of code</p>
+    <a href="loc.html">
+      <div class="big-number">
+        <?php echo number_format($stats['summary']['total_loc']); ?>
+      </div>
+      <p>Lines of code</p>
+    </a>
   </div>
 
   <div>
-    <div class="big-number">
-      <?php echo number_format($stats['summary']['author_count']); ?>
-    </div>
-    <p>Authors</p>
+    <a href="authors.html">
+      <div class="big-number">
+        <?php echo number_format($stats['summary']['author_count']); ?>
+      </div>
+      <p>Authors</p>
+    </a>
   </div>
 
 </section>

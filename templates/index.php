@@ -105,10 +105,11 @@ $this->renderPieChart($rows, "chart_authors_pie_changes", "Changes", 500, 300);
 
 ?>
 
-<h2>Tag Cloud of Words in Commit Log Messages</h2>
-
-<?php
-$tags = $stats['tagcloud']['all'];
-require(__DIR__ . "/_tag_cloud.php");
-?>
+<section class="tag-cloud">
+  <h2>Tag Cloud of Words in Commit Log Messages</h2>
+  <?php
+    $tags = $stats['tagcloud']['all'];
+    require(__DIR__ . "/_tag_cloud.php");
+  ?>
+</section>
 

@@ -34,7 +34,6 @@ p {
 
 .status {
   display: flex;
-  padding: 60px;
   flex-direction: row;
   background-color: #242423;
 }
@@ -43,20 +42,41 @@ p {
   width: 25%;
   text-align: center;
   color: #fff;
+  padding: 20px 40px;
+  box-sizing: border-box;
+}
+
+.status a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  padding: 40px;
+  transition: all 0.5s ease;
+  border: 1px solid #242423;
+}
+
+.status a:hover {
+  border-color: #545454;
 }
 
 .status .big-number {
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 
 .information {
   padding: 40px 40px 20px 40px;
   background-color: #f4f4f4;
+  margin-bottom: 20px;
 }
 
 .information p {
   margin-bottom: 20px;
 }
+
+ .tag-cloud {
+  padding: 40px;
+  background-color: #f4f4f4;
+ }
 
 dt {
   font-weight: bold;
