@@ -1,141 +1,154 @@
-<div class="breadcrumb">
-  <a href="index.html">Statgit</a> &gt;&gt;
-</div>
-<h1>File Statistics</h1>
-
-<dl>
-  <dt>Total files</dt>
-  <dd><?php echo number_format($stats['summary']['total_files']); ?></dd>
-
-  <dt>Average file size</dt>
-  <dd><?php echo number_format($stats['summary']['total_loc'] / $stats['summary']['total_files']); ?> lines of code</dd>
-</dl>
-
-<h2>File Count</h2>
-
 <?php
-
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
-  $value = $this->getTotalFiles($database['stats'][$commit['hash']]);
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
-
-$this->renderLineChart($rows, "chart_files", "Files", 800, 600);
-
+  require(__DIR__ . "/_header.php");
 ?>
 
-<h2>Average Lines of Code per File</h2>
+<section class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+  </div>
+  <h2>File Statistics</h2>
+</section>
 
-<?php
+<section class="container">
 
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+  <?php require(__DIR__ . "/_navigation.php") ?>
 
-  if ($this->getTotalFiles($database['stats'][$commit['hash']]) === 0) {
-    // prevent div/0
-    continue;
-  }
+  <div class="right-column">
+    <dl>
+      <dt>Total files</dt>
+      <dd><?php echo number_format($stats['summary']['total_files']); ?></dd>
 
-  $value = $this->getTotalLoc($database['stats'][$commit['hash']]) / $this->getTotalFiles($database['stats'][$commit['hash']]);
-  $rows[date('Y-m-d', strtotime($date))] = array($date, sprintf("%04.2f", $value));
-}
+      <dt>Average file size</dt>
+      <dd><?php echo number_format($stats['summary']['total_loc'] / $stats['summary']['total_files']); ?> lines of code</dd>
+    </dl>
 
-$this->renderLineChart($rows, "chart_average", "LOC/File", 800, 600);
+    <h2>File Count</h2>
 
-?>
+    <?php
 
-<h2>Files with Most Revisions</h2>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
+      $value = $this->getTotalFiles($database['stats'][$commit['hash']]);
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-<table class="statistics">
-  <thead>
-    <tr><th>File</th><th>Revisions</th><th>Size</th></tr>
-  </thead>
-  <tbody>
-<?php
+    $this->renderLineChart($rows, "chart_files", "Files", 800, 600);
 
-$sorted = $stats["file_revisions"];
-uasort($sorted, function ($a, $b) {
-  if ($a["revisions"] == $b["revisions"]) {
-    return 0;
-  }
-  return $a["revisions"] > $b["revisions"] ? -1 : 1;
-});
-$sorted = array_splice($sorted, 0, 20);
+    ?>
 
-foreach ($sorted as $filename => $file) {
-  $size = isset($database["files"][$filename]) ? $database["files"][$filename] : 0;
+    <h2>Average Lines of Code per File</h2>
 
-  echo "<tr>";
-  echo "<th class=\"filename\"><span class=\"file" . ($file['exists'] ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
-  echo "<td class=\"number\">" . number_format($file['revisions']) . "</td>";
-  echo "<td class=\"number\">" . number_format($size / 1024, 2) . " KB</td>";
-  echo "</tr>\n";
-}
+    <?php
 
-?>
-  </tbody>
-</table>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<h2>Existing Files with Most Revisions</h2>
+      if ($this->getTotalFiles($database['stats'][$commit['hash']]) === 0) {
+        // prevent div/0
+        continue;
+      }
 
-<table class="statistics">
-  <thead>
-    <tr><th>File</th><th>Revisions</th><th>Size</th></tr>
-  </thead>
-  <tbody>
-<?php
+      $value = $this->getTotalLoc($database['stats'][$commit['hash']]) / $this->getTotalFiles($database['stats'][$commit['hash']]);
+      $rows[date('Y-m-d', strtotime($date))] = array($date, sprintf("%04.2f", $value));
+    }
 
-$sorted = array_filter($stats["file_revisions"], function ($a) {
-  return $a["exists"];
-});
-uasort($sorted, function ($a, $b) {
-  if ($a["revisions"] == $b["revisions"]) {
-    return 0;
-  }
-  return $a["revisions"] > $b["revisions"] ? -1 : 1;
-});
-$sorted = array_splice($sorted, 0, 20);
+    $this->renderLineChart($rows, "chart_average", "LOC/File", 800, 600);
 
-foreach ($sorted as $filename => $file) {
-  $size = isset($database["files"][$filename]) ? $database["files"][$filename] : 0;
+    ?>
 
-  echo "<tr>";
-  echo "<th class=\"filename\"><span class=\"file" . ($file['exists'] ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
-  echo "<td class=\"number\">" . number_format($file['revisions']) . "</td>";
-  echo "<td class=\"number\">" . number_format($size / 1024, 2) . " KB</td>";
-  echo "</tr>\n";
-}
+    <h2>Files with Most Revisions</h2>
 
-?>
-  </tbody>
-</table>
+    <table class="statistics">
+      <thead>
+        <tr><th>File</th><th>Revisions</th><th>Size</th></tr>
+      </thead>
+      <tbody>
+    <?php
 
-<h2>Largest files</h2>
+    $sorted = $stats["file_revisions"];
+    uasort($sorted, function ($a, $b) {
+      if ($a["revisions"] == $b["revisions"]) {
+        return 0;
+      }
+      return $a["revisions"] > $b["revisions"] ? -1 : 1;
+    });
+    $sorted = array_splice($sorted, 0, 20);
 
-<table class="statistics">
-  <thead>
-    <tr><th>File</th><th>Size</th><th>Revisions</th></tr>
-  </thead>
-  <tbody>
-<?php
+    foreach ($sorted as $filename => $file) {
+      $size = isset($database["files"][$filename]) ? $database["files"][$filename] : 0;
 
-$sorted = $database["files"];
-arsort($sorted);
-$sorted = array_splice($sorted, 0, 20);
+      echo "<tr>";
+      echo "<th class=\"filename\"><span class=\"file" . ($file['exists'] ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
+      echo "<td class=\"number\">" . number_format($file['revisions']) . "</td>";
+      echo "<td class=\"number\">" . number_format($size / 1024, 2) . " KB</td>";
+      echo "</tr>\n";
+    }
 
-foreach ($sorted as $filename => $size) {
-  $file = $stats["file_revisions"][$filename];
+    ?>
+      </tbody>
+    </table>
 
-  echo "<tr>";
-  echo "<th class=\"filename\"><span class=\"file" . ($file['exists'] ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
-  echo "<td class=\"number\">" . number_format($size / 1024, 2) . " KB</td>";
-  echo "<td class=\"number\">" . number_format($file["revisions"]) . "</td>";
-  echo "</tr>\n";
-}
+    <h2>Existing Files with Most Revisions</h2>
 
-?>
-  </tbody>
-</table>
+    <table class="statistics">
+      <thead>
+        <tr><th>File</th><th>Revisions</th><th>Size</th></tr>
+      </thead>
+      <tbody>
+    <?php
+
+    $sorted = array_filter($stats["file_revisions"], function ($a) {
+      return $a["exists"];
+    });
+    uasort($sorted, function ($a, $b) {
+      if ($a["revisions"] == $b["revisions"]) {
+        return 0;
+      }
+      return $a["revisions"] > $b["revisions"] ? -1 : 1;
+    });
+    $sorted = array_splice($sorted, 0, 20);
+
+    foreach ($sorted as $filename => $file) {
+      $size = isset($database["files"][$filename]) ? $database["files"][$filename] : 0;
+
+      echo "<tr>";
+      echo "<th class=\"filename\"><span class=\"file" . ($file['exists'] ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
+      echo "<td class=\"number\">" . number_format($file['revisions']) . "</td>";
+      echo "<td class=\"number\">" . number_format($size / 1024, 2) . " KB</td>";
+      echo "</tr>\n";
+    }
+
+    ?>
+      </tbody>
+    </table>
+
+    <h2>Largest files</h2>
+
+    <table class="statistics">
+      <thead>
+        <tr><th>File</th><th>Size</th><th>Revisions</th></tr>
+      </thead>
+      <tbody>
+    <?php
+
+    $sorted = $database["files"];
+    arsort($sorted);
+    $sorted = array_splice($sorted, 0, 20);
+
+    foreach ($sorted as $filename => $size) {
+      $file = $stats["file_revisions"][$filename];
+
+      echo "<tr>";
+      echo "<th class=\"filename\"><span class=\"file" . ($file['exists'] ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
+      echo "<td class=\"number\">" . number_format($size / 1024, 2) . " KB</td>";
+      echo "<td class=\"number\">" . number_format($file["revisions"]) . "</td>";
+      echo "</tr>\n";
+    }
+
+    ?>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -9,68 +9,76 @@
   <h2>Authors</h2>
 </section>
 
-<dl>
-  <dt>Total authors</dt>
-  <dd><?php echo number_format($stats['summary']['author_count']); ?></dd>
-</dl>
+<section class="container">
 
-<?php
+  <?php require(__DIR__ . "/_navigation.php") ?>
 
-$commit_email = false;
-require(__DIR__ . "/_author_activity.php");
+  <div class="right-column">
 
-?>
+    <h2>Total authors</h2>
+    <p><?php echo number_format($stats['summary']['author_count']); ?></p>
 
-<h2>Top Authors</h2>
+    <?php
 
-<table class="statistics">
-  <thead>
-    <tr><th>Author</th><th>Commits</th><th>Changes</th><th>Last Commit</th></tr>
-  </thead>
-  <tbody>
-<?php
+    $commit_email = false;
+    require(__DIR__ . "/_author_activity.php");
 
-$sorted = $stats["summary"]["authors"];
-uasort($sorted, function ($a, $b) {
-  if ($a["commits"] == $b["commits"]) {
-    return 0;
-  }
-  return $a["commits"] > $b["commits"] ? -1 : 1;
-});
-$sorted = array_splice($sorted, 0, 50);
+    ?>
 
-foreach ($sorted as $email => $author) {
-  if (!$author['email']) {
-    continue;
-  }
-  echo "<tr>";
-  echo "<th>" . $this->linkTo($this->authorLink($author), $author['email']) . "</th>";
-  echo "<td class=\"number\">" . number_format($author['commits']) . "</td>";
-  echo "<td class=\"number\">" . number_format($author['changed']) . "</td>";
-  echo "<td class=\"date\">" . date("Y-m-d", strtotime($author['last_commit'])) . "</td>";
-  echo "</tr>\n";
-}
+    <h2>Top Authors</h2>
 
-?>
-  </tbody>
-</table>
+    <table class="statistics">
+      <thead>
+        <tr><th>Author</th><th>Commits</th><th>Changes</th><th>Last Commit</th></tr>
+      </thead>
+      <tbody>
+    <?php
 
-<h2>Ownership <small>(blame)</small></h2>
+    $sorted = $stats["summary"]["authors"];
+    uasort($sorted, function ($a, $b) {
+      if ($a["commits"] == $b["commits"]) {
+        return 0;
+      }
+      return $a["commits"] > $b["commits"] ? -1 : 1;
+    });
+    $sorted = array_splice($sorted, 0, 50);
 
-<?php
+    foreach ($sorted as $email => $author) {
+      if (!$author['email']) {
+        continue;
+      }
+      echo "<tr>";
+      echo "<th>" . $this->linkTo($this->authorLink($author), $author['email']) . "</th>";
+      echo "<td class=\"number\">" . number_format($author['commits']) . "</td>";
+      echo "<td class=\"number\">" . number_format($author['changed']) . "</td>";
+      echo "<td class=\"date\">" . date("Y-m-d", strtotime($author['last_commit'])) . "</td>";
+      echo "</tr>\n";
+    }
 
-$sorted = $stats["summary"]["authors"];
-uasort($sorted, function ($a, $b) {
-  if ($a["blame"] == $b["blame"]) {
-    return 0;
-  }
-  return $a["blame"] > $b["blame"] ? -1 : 1;
-});
-$rows = array();
-foreach ($sorted as $author) {
-  $rows[$author['email']] = $author['blame'];
-}
+    ?>
+      </tbody>
+    </table>
 
-$this->renderPieChart($rows, "chart_authors_pie_blame", "Lines");
+    <h2>Ownership <small>(blame)</small></h2>
 
-?>
+    <?php
+
+    $sorted = $stats["summary"]["authors"];
+    uasort($sorted, function ($a, $b) {
+      if ($a["blame"] == $b["blame"]) {
+        return 0;
+      }
+      return $a["blame"] > $b["blame"] ? -1 : 1;
+    });
+    $rows = array();
+    foreach ($sorted as $author) {
+      $rows[$author['email']] = $author['blame'];
+    }
+
+    $this->renderPieChart($rows, "chart_authors_pie_blame", "Lines");
+
+    ?>
+
+  </div>
+
+</section>

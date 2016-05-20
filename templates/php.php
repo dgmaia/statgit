@@ -1,207 +1,222 @@
-<div class="breadcrumb">
-  <a href="index.html">Statgit</a> &gt;&gt;
-</div>
-<h1>PHP Statistics</h1>
-
 <?php
-/* bail early if there are none */
-if (!$database['phpstats']) {
-  return;
-}
-
-$width = 400;
-$height = 300;
+  require(__DIR__ . "/_header.php");
 ?>
 
-<dl>
-  <dt>Statements</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['statements']); ?></dd>
+<section class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+  </div>
+  <h2>PHP Statistics</h2>
+</section>
 
-  <dt>Classes</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['classes']); ?></dd>
+<section class="container">
 
-  <dt>Interfaces</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['interfaces']); ?></dd>
+  <?php require(__DIR__ . "/_navigation.php") ?>
 
-  <dt>Class methods</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['class_methods']); ?></dd>
+  <div class="right-column">
+    <?php
+    /* bail early if there are none */
+    if (!$database['phpstats']) {
+      return;
+    }
 
-  <dt>Functions</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['functions']); ?></dd>
+    $width = 400;
+    $height = 300;
+    ?>
 
-  <dt>Includes</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['includes']); ?></dd>
+    <dl>
+      <dt>Statements</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['statements']); ?></dd>
 
-  <dt>Inline HTML blocks</dt>
-  <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['inline_html']); ?></dd>
-</dl>
+      <dt>Classes</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['classes']); ?></dd>
 
-<h2>Statements</h2>
+      <dt>Interfaces</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['interfaces']); ?></dd>
 
-<?php
+      <dt>Class methods</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['class_methods']); ?></dd>
 
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      <dt>Functions</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['functions']); ?></dd>
 
-  if (!isset($database['phpstats'][$commit['hash']])) {
-    // ignore PHP parse errors
-    continue;
-  }
+      <dt>Includes</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['includes']); ?></dd>
 
-  $value = $database['phpstats'][$commit['hash']]['statements'];
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+      <dt>Inline HTML blocks</dt>
+      <dd><?php echo number_format($database['phpstats'][$stats['summary']['last_hash']]['inline_html']); ?></dd>
+    </dl>
 
-$this->renderLineChart($rows, "chart_statements", "Statements", $width, $height);
+    <h2>Statements</h2>
 
-?>
+    <?php
 
-<h2>Statements per File</h2>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<?php
+      if (!isset($database['phpstats'][$commit['hash']])) {
+        // ignore PHP parse errors
+        continue;
+      }
 
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      $value = $database['phpstats'][$commit['hash']]['statements'];
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-  if (!isset($database['stats'][$commit['hash']]['PHP']) || $database['stats'][$commit['hash']]['PHP']['files'] == 0) {
-    continue;
-  }
+    $this->renderLineChart($rows, "chart_statements", "Statements", $width, $height);
 
-  $value = sprintf("%0.2f", $database['phpstats'][$commit['hash']]['statements'] / $database['stats'][$commit['hash']]['PHP']['files']);
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+    ?>
 
-$this->renderLineChart($rows, "chart_statements_file", "Statements per File", $width, $height);
+    <h2>Statements per File</h2>
 
-?>
+    <?php
 
-<h2>Classes</h2>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<?php
+      if (!isset($database['stats'][$commit['hash']]['PHP']) || $database['stats'][$commit['hash']]['PHP']['files'] == 0) {
+        continue;
+      }
 
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      $value = sprintf("%0.2f", $database['phpstats'][$commit['hash']]['statements'] / $database['stats'][$commit['hash']]['PHP']['files']);
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-  if (!isset($database['phpstats'][$commit['hash']])) {
-    // ignore PHP parse errors
-    continue;
-  }
+    $this->renderLineChart($rows, "chart_statements_file", "Statements per File", $width, $height);
 
-  $value = $database['phpstats'][$commit['hash']]['classes'];
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+    ?>
 
-$this->renderLineChart($rows, "chart_classes", "Classes", $width, $height);
+    <h2>Classes</h2>
 
-?>
+    <?php
 
-<h2>Methods per Class</h2>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<?php
+      if (!isset($database['phpstats'][$commit['hash']])) {
+        // ignore PHP parse errors
+        continue;
+      }
 
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      $value = $database['phpstats'][$commit['hash']]['classes'];
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-  if (!isset($database['phpstats'][$commit['hash']])) {
-    // ignore PHP parse errors
-    continue;
-  }
+    $this->renderLineChart($rows, "chart_classes", "Classes", $width, $height);
 
-  if ($database['phpstats'][$commit['hash']]['classes'] == 0) {
-    continue;
-  }
-  $value = sprintf("%0.2f", $database['phpstats'][$commit['hash']]['class_methods'] / $database['phpstats'][$commit['hash']]['classes']);
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+    ?>
 
-$this->renderLineChart($rows, "chart_class_methods_avg", "Methods", $width, $height);
+    <h2>Methods per Class</h2>
 
-?>
+    <?php
 
-<h2>Includes</h2>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<?php
+      if (!isset($database['phpstats'][$commit['hash']])) {
+        // ignore PHP parse errors
+        continue;
+      }
 
-$always_zero = true;
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      if ($database['phpstats'][$commit['hash']]['classes'] == 0) {
+        continue;
+      }
+      $value = sprintf("%0.2f", $database['phpstats'][$commit['hash']]['class_methods'] / $database['phpstats'][$commit['hash']]['classes']);
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-  if (!isset($database['phpstats'][$commit['hash']])) {
-    // ignore PHP parse errors
-    continue;
-  }
+    $this->renderLineChart($rows, "chart_class_methods_avg", "Methods", $width, $height);
 
-  $value = $database['phpstats'][$commit['hash']]['includes'];
-  if ($value) {
-    $always_zero = false;
-  }
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+    ?>
 
-if ($always_zero) {
-  echo "(none)";
-} else {
-  $this->renderLineChart($rows, "chart_includes", "Includes", $width, $height);
-}
+    <h2>Includes</h2>
 
-?>
+    <?php
 
-<h2>Inline HTML blocks</h2>
+    $always_zero = true;
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<?php
+      if (!isset($database['phpstats'][$commit['hash']])) {
+        // ignore PHP parse errors
+        continue;
+      }
 
-$always_zero = true;
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      $value = $database['phpstats'][$commit['hash']]['includes'];
+      if ($value) {
+        $always_zero = false;
+      }
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-  if (!isset($database['phpstats'][$commit['hash']])) {
-    // ignore PHP parse errors
-    continue;
-  }
+    if ($always_zero) {
+      echo "(none)";
+    } else {
+      $this->renderLineChart($rows, "chart_includes", "Includes", $width, $height);
+    }
 
-  $value = $database['phpstats'][$commit['hash']]['inline_html'];
-  if ($value) {
-    $always_zero = false;
-  }
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+    ?>
 
-if ($always_zero) {
-  echo "(none)";
-} else {
-  $this->renderLineChart($rows, "chart_inline_html", "Blocks", $width, $height);
-}
+    <h2>Inline HTML blocks</h2>
 
-?>
+    <?php
 
-<h2>Lines of Code per Method/Function</h2>
+    $always_zero = true;
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
 
-<?php
+      if (!isset($database['phpstats'][$commit['hash']])) {
+        // ignore PHP parse errors
+        continue;
+      }
 
-$rows = array();
-foreach ($database['commits'] as $commit) {
-  $date = $commit['author_date'];
+      $value = $database['phpstats'][$commit['hash']]['inline_html'];
+      if ($value) {
+        $always_zero = false;
+      }
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
 
-  if (!isset($database['phpstats'][$commit['hash']])) {
-    // ignore PHP parse errors
-    continue;
-  }
-  $functions = $database['phpstats'][$commit['hash']]['functions'] + $database['phpstats'][$commit['hash']]['class_methods'];
+    if ($always_zero) {
+      echo "(none)";
+    } else {
+      $this->renderLineChart($rows, "chart_inline_html", "Blocks", $width, $height);
+    }
 
-  if ($functions == 0) {
-    continue;
-  }
+    ?>
 
-  $value = sprintf("%0.2f", $database['stats'][$commit['hash']]['PHP']['code'] / $functions);
-  $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
-}
+    <h2>Lines of Code per Method/Function</h2>
 
-$this->renderLineChart($rows, "chart_loc_method", "LOC", $width, $height);
+    <?php
 
-?>
+    $rows = array();
+    foreach ($database['commits'] as $commit) {
+      $date = $commit['author_date'];
+
+      if (!isset($database['phpstats'][$commit['hash']])) {
+        // ignore PHP parse errors
+        continue;
+      }
+      $functions = $database['phpstats'][$commit['hash']]['functions'] + $database['phpstats'][$commit['hash']]['class_methods'];
+
+      if ($functions == 0) {
+        continue;
+      }
+
+      $value = sprintf("%0.2f", $database['stats'][$commit['hash']]['PHP']['code'] / $functions);
+      $rows[date('Y-m-d', strtotime($date))] = array($date, $value);
+    }
+
+    $this->renderLineChart($rows, "chart_loc_method", "LOC", $width, $height);
+
+    ?>
+  </div>
+</section>
+
+

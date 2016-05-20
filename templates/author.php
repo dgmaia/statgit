@@ -14,88 +14,94 @@ $author = $argument;
   <h2><?php echo htmlspecialchars($author['email']); ?></h2>
 </section>
 
-<dl>
-  <dt>Name</dt>
-  <dd><?php echo htmlspecialchars($author['name']); ?></dd>
+<section class="container">
 
-  <dt>First commit</dt>
-  <dd>
-    <?php echo $this->linkCommit($author['first_hash']); ?>
-    <br>
-    <i><?php echo htmlspecialchars($author['first_subject']); ?></i>
-  </dd>
+  <?php require(__DIR__ . "/_navigation.php") ?>
 
-  <dt>Last commit</dt>
-  <dd>
-    <?php echo $this->linkCommit($author['last_hash']); ?>
-    <br>
-    <i><?php echo htmlspecialchars($author['last_subject']); ?></i>
-  </dd>
+  <div class="right-column">
+    <h2>Name</h2>
+    <p><?php echo htmlspecialchars($author['name']); ?></p>
 
-  <dt>Commits</dt>
-  <dd><?php echo number_format($author['commits']); ?></dd>
+    <h2>First commit</h2>
+    <p>
+      <?php echo $this->linkCommit($author['first_hash']); ?>
+      <br>
+      <i><?php echo htmlspecialchars($author['first_subject']); ?></i>
+    </p>
 
-  <dt>Changes</dt>
-  <dd>
-    <?php echo $this->plural($author['added'], "addition"); ?>,
-    <?php echo $this->plural($author['removed'], "deletion"); ?>
-  </dd>
-</dl>
+    <h2>Last commit</h2>
+    <p>
+      <?php echo $this->linkCommit($author['last_hash']); ?>
+      <br>
+      <i><?php echo htmlspecialchars($author['last_subject']); ?></i>
+    </p>
 
-<?php
+    <h2>Commits</h2>
+    <p><?php echo number_format($author['commits']); ?></p>
 
-$commit_email = $author['email'];
-require(__DIR__ . "/_author_activity.php");
+    <h2>Changes</h2>
+    <p>
+      <?php echo $this->plural($author['added'], "addition"); ?>,
+      <?php echo $this->plural($author['removed'], "deletion"); ?>
+    </p>
+    <?php
 
-?>
+    $commit_email = $author['email'];
+    require(__DIR__ . "/_author_activity.php");
 
-<h2>Files with Most Revisions</h2>
+    ?>
 
-<table class="statistics">
-  <thead>
-    <tr><th>File</th><th>Commits</th></tr>
-  </thead>
-  <tbody>
-<?php
+    <h2>Files with Most Revisions</h2>
 
-foreach ($author['files'] as $filename => $commits) {
-  $exists = $stats['file_revisions'][$filename]['exists'];
+    <table class="statistics">
+      <thead>
+        <tr><th>File</th><th>Commits</th></tr>
+      </thead>
+      <tbody>
+    <?php
 
-  echo "<tr>";
-  echo "<th class=\"filename\"><span class=\"file" . ($exists ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
-  echo "<td class=\"number\">" . number_format($commits) . "</td>";
-  echo "</tr>\n";
-}
+    foreach ($author['files'] as $filename => $commits) {
+      $exists = $stats['file_revisions'][$filename]['exists'];
 
-?>
-  </tbody>
-</table>
+      echo "<tr>";
+      echo "<th class=\"filename\"><span class=\"file" . ($exists ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
+      echo "<td class=\"number\">" . number_format($commits) . "</td>";
+      echo "</tr>\n";
+    }
 
-<h2>Tag Cloud of Words in Commit Log Messages</h2>
+    ?>
+      </tbody>
+    </table>
 
-<?php
-$tags = $stats['tagcloud'][$author['email']];
-require(__DIR__ . "/_tag_cloud.php");
-?>
+    <h2>Tag Cloud of Words in Commit Log Messages</h2>
 
-<h2>Most Owned Files</h2>
+    <?php
+    $tags = $stats['tagcloud'][$author['email']];
+    require(__DIR__ . "/_tag_cloud.php");
+    ?>
 
-<table class="statistics">
-  <thead>
-    <tr><th>File</th><th>Blame %</th></tr>
-  </thead>
-  <tbody>
-<?php
+    <h2>Most Owned Files</h2>
 
-foreach ($author['blame_files'] as $filename => $blame) {
-  $exists = $stats['file_revisions'][$filename]['exists'];
+    <table class="statistics">
+      <thead>
+        <tr><th>File</th><th>Blame %</th></tr>
+      </thead>
+      <tbody>
+    <?php
 
-  echo "<tr>";
-  echo "<th class=\"filename\"><span class=\"file" . ($exists ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
-  echo "<td class=\"number\">" . sprintf("%0.2f%%", 100 * $blame) . "</td>";
-  echo "</tr>\n";
-}
+    foreach ($author['blame_files'] as $filename => $blame) {
+      $exists = $stats['file_revisions'][$filename]['exists'];
 
-?>
-  </tbody>
-</table>
+      echo "<tr>";
+      echo "<th class=\"filename\"><span class=\"file" . ($exists ? " exists" : " deleted") . "\">" . htmlspecialchars($filename) . "</span></th>";
+      echo "<td class=\"number\">" . sprintf("%0.2f%%", 100 * $blame) . "</td>";
+      echo "</tr>\n";
+    }
+
+    ?>
+      </tbody>
+    </table>
+
+  </div>
+
+</section>

@@ -117,8 +117,10 @@ p {
   text-decoration: none;
   transition: all 0.5s ease;
   border-bottom: 1px solid #242423;
-  padding-bottom: 5px;
+  padding: 0 3px 5px 3px;
   position: relative;
+  text-transform: uppercase;
+  font-weight: 300;
 }
 
 .breadcrumb a:hover {
@@ -133,7 +135,7 @@ p {
   border-style: solid;
   position: absolute;
   right: -25px;
-  top: 2px;
+  top: 6px;
   border-width: .4em 0 .4em .4em;
   border-color:transparent transparent transparent #fff;
 }
