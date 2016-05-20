@@ -1,7 +1,7 @@
 html {
   margin: 0;
   padding: 0;
-  font-family: Arial;
+  font-family: 'Roboto Mono', Arial, sans-serif;
   font-size: 16px;
 }
 
@@ -25,6 +25,8 @@ p {
 
 .header h1 {
   font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 300;
 }
 
 .header h2 {
@@ -66,6 +68,8 @@ p {
   padding: 20px;
   transition: all 0.5s ease;
   border: 1px solid #242423;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
 .status a:hover {
@@ -74,12 +78,12 @@ p {
 
 .status .big-number {
   font-size: 3.5rem;
+  font-weight: 400;
 }
 
 .information {
   padding: 40px 40px 20px 40px;
-  background-color: #f4f4f4;
-  margin-bottom: 20px;
+  background-color: #ECECEC;
 }
 
 .information p {
@@ -136,6 +140,47 @@ p {
 
 .breadcrumb a:last-child:after {
   display: none;
+}
+
+.container {
+  width: 100%
+  box-sizing: border-box;
+  display: flex;
+}
+
+.navigation {
+  width: 300px;
+  background-color: #FAFAFA;
+  box-sizing: border-box;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 40px;
+}
+
+.navigation li {
+  text-transform: uppercase;
+  list-style: none;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.navigation li a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.5s ease;
+  border-bottom: 1px solid #FAFAFA;
+}
+
+.navigation li a:hover {
+  border-bottom: 1px solid #000;
+}
+
+
+.right-column {
+  width: calc(100% - 300px);
+  box-sizing: border-box;
+  padding: 0 40px;
 }
 
 

@@ -8,7 +8,7 @@ $author = $argument;
 
 <section class="page-header">
   <div class="breadcrumb">
-    <a href="index.html">Statgit</a>
+    <a href="index.html">Home</a>
     <a href="authors.html">Authors</a>
   </div>
   <h2><?php echo htmlspecialchars($author['email']); ?></h2>

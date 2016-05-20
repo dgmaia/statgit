@@ -4,7 +4,7 @@
 
 <section class="page-header">
   <div class="breadcrumb">
-    <a href="index.html">Statgit</a>
+    <a href="index.html">Home</a>
   </div>
   <h2>Authors</h2>
 </section>
