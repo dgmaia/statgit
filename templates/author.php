@@ -2,11 +2,17 @@
 $author = $argument;
 ?>
 
-<div class="breadcrumb">
-  <a href="index.html">Statgit</a> &gt;&gt;
-  <a href="authors.html">Authors</a> &gt;&gt;
-</div>
-<h1><?php echo htmlspecialchars($author['email']); ?></h1>
+<?php
+  require(__DIR__ . "/_header.php");
+?>
+
+<section class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Statgit</a>
+    <a href="authors.html">Authors</a>
+  </div>
+  <h2><?php echo htmlspecialchars($author['email']); ?></h2>
+</section>
 
 <dl>
   <dt>Name</dt>

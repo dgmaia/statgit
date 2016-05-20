@@ -20,7 +20,7 @@ p {
 
 .header {
   background-color: #F5CB5C;
-  padding: 60px 40px;
+  padding: 30px 40px;
 }
 
 .header h1 {
@@ -30,6 +30,19 @@ p {
 .header h2 {
   font-size: 5rem;
   font-weight: normal;
+  color: #000;
+}
+
+.header a {
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: 10px;
+  border-bottom: 5px solid #F5CB5C;
+  transition: border 0.5s ease;
+}
+
+.header a:hover {
+  border-bottom: 5px solid #000;
 }
 
 .status {
@@ -42,7 +55,7 @@ p {
   width: 25%;
   text-align: center;
   color: #fff;
-  padding: 20px 40px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -50,7 +63,7 @@ p {
   color: inherit;
   text-decoration: none;
   display: block;
-  padding: 40px;
+  padding: 20px;
   transition: all 0.5s ease;
   border: 1px solid #242423;
 }
@@ -73,10 +86,58 @@ p {
   margin-bottom: 20px;
 }
 
- .tag-cloud {
+.tag-cloud {
   padding: 40px;
   background-color: #f4f4f4;
- }
+}
+
+.page-header {
+  background-color: #242423;
+  padding: 40px 40px 30px 40px;
+  color: #fff;
+}
+
+.page-header h2 {
+  margin-bottom: 0;
+  font-size: 2rem;
+}
+
+.breadcrumb {
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  display: inline-block;
+  margin-right: 40px;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  border-bottom: 1px solid #242423;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+.breadcrumb a:hover {
+  border-color: #fff;
+}
+
+.breadcrumb a:after {
+  display: block;
+  content: "";
+  width: 0;
+  height:0em;
+  border-style: solid;
+  position: absolute;
+  right: -25px;
+  top: 2px;
+  border-width: .4em 0 .4em .4em;
+  border-color:transparent transparent transparent #fff;
+}
+
+.breadcrumb a:last-child:after {
+  display: none;
+}
+
 
 dt {
   font-weight: bold;
@@ -108,14 +169,6 @@ ul.tag_cloud li {
 .tag20 { font-size: 130%; }
 .tag10 { font-size: 115%; }
 .tag0 { font-size: 100%; }
-
-.breadcrumb {
-  font-size: 80%;
-}
-
-.breadcrumb + h1 {
-  margin-top: 0;
-}
 
 .github {
   background: url('https://raw.githubusercontent.com/soundasleep/statgit/master/images/GitHub-Mark-32px.png') top left no-repeat;

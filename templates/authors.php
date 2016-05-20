@@ -1,7 +1,13 @@
-<div class="breadcrumb">
-  <a href="index.html">Statgit</a> &gt;&gt;
-</div>
-<h1>Authors</h1>
+<?php
+  require(__DIR__ . "/_header.php");
+?>
+
+<section class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Statgit</a>
+  </div>
+  <h2>Authors</h2>
+</section>
 
 <dl>
   <dt>Total authors</dt>
